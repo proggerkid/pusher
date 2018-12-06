@@ -10,16 +10,16 @@
 <body>
 	<% include nav.ejs %>
 	
-	<% if(typeof userFiles != 'undefined') %>
+	<% if(typeof userFiles != undefined) %>
 		<div class='container'>
 			<% for(var i = 0; i < userFiles.length; i++){ %>
 				<div class='row'>
 					<div class='col-md-6'>
-						<img src='<%= userFiles[i] %>' id='image'>	
+						<img src='/upload/<%= userFiles[i] %>' id='image'>	
 					</div>
 					<% if(userFiles[i+1] != undefined){ %>
 						<div class='col-md-6'>
-							<img src='<%= userFiles[i+1] %>' id='image'>
+							<img src='/upload/<%= userFiles[i+1] %>' id='image'>
 						</div>
 					<% } %>
 				</div>

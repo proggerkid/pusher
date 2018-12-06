@@ -1,4 +1,9 @@
 module.exports = function(app, fs, Upload){
+	
+	/*
+		get index
+	*/
+
 	app.get('/', function(req, res){
 		if(req.session.user != undefined){
 			let profileData = {
@@ -11,6 +16,10 @@ module.exports = function(app, fs, Upload){
 			res.render('index', {status: ""});
 		}
 	});
+
+	/*
+		get registration
+	*/
 
 	app.get('/registration', function(req, res){
 	let errors = {
@@ -30,6 +39,10 @@ module.exports = function(app, fs, Upload){
 	
 	});
 
+	/*
+		get login
+	*/
+
 	app.get ('/login', function(req, res){
 		if(req.session.user != undefined){
 			let profileData = {
@@ -42,6 +55,10 @@ module.exports = function(app, fs, Upload){
 			res.render('login');	
 		}
 	});
+
+	/*
+		get upload
+	*/
 
 	app.get('/upload', function(req, res){
 		if(req.session.user == undefined){
@@ -57,17 +74,21 @@ module.exports = function(app, fs, Upload){
 		}
 	});
 
+	/*
+		get profile
+	*/
+
 	app.get('/profile', (req, res) => {
 		if(req.session.user == undefined){
 			res.render('login');
 		}
 		else{
-		let profileData = {
-			username: req.session.user.username,
-			email: req.session.user.email
-		};
-		let fileNames = fs.readdirSync('./public/upload');
-		renderProfile(req, res, profileData, fileNames, Upload);	
+			let profileData = {
+				username: req.session.user.username,
+				email: req.session.user.email
+			};
+			let fileNames = fs.readdirSync('./public/upload');
+			renderProfile(req, res, profileData, fileNames, Upload);	
 		}
 	});
 }
@@ -87,6 +108,7 @@ function renderProfile(req, res, profileData, fileNames, Upload){
 
 		}
 		else{
+			console.log(userFiles);
 			res.render('profile', {userFiles: userFiles});		
 		}
 	});
