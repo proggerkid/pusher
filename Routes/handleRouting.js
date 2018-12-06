@@ -83,33 +83,20 @@ module.exports = function(app, fs, Upload){
 			res.render('login');
 		}
 		else{
-			let profileData = {
-				username: req.session.user.username,
-				email: req.session.user.email
-			};
-			let fileNames = fs.readdirSync('./public/upload');
-			renderProfile(req, res, profileData, fileNames, Upload);	
+			res.render('profile');
 		}
 	});
-}
 
-function renderProfile(req, res, profileData, fileNames, Upload){
-	let userFiles = [];
+	/*
+		get userUploads
+	*/
 
-	Upload.find({username: profileData.username}, (err, data) => {
-		for(var i = 0; i < data.length; i++){
-			for(var j = 0; j < fileNames.length; j++){
-				if(data[i].filename == fileNames[j]){
-					userFiles.push(fileNames[j]);
-				}
-			}
-		}
-		if(err){
-
+	app.get('/userUploads', (req, res) => {
+		if(req.session.user == undefined){
+			res.render('login');
 		}
 		else{
-			console.log(userFiles);
-			res.render('profile', {userFiles: userFiles});		
+			res.render('userUploads');
 		}
 	});
 }
